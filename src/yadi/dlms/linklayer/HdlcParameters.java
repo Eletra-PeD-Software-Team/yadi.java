@@ -22,8 +22,8 @@ public class HdlcParameters {
 	final int windowSizeTx = 1; //windowSizeTx != 1 not supported
 	final int windowSizeRx = 1; //windowSizeTx != 1 not supported
 	int timeoutMillis = 1500;
-	int maxInformationFieldLengthTx = 128;
-	int maxInformationFieldLengthRx = 128;
+	int maxInformationFieldLengthTx = 256;
+	int maxInformationFieldLengthRx = 256;
 	byte[] serverAddress = new byte[]{0x00, 0x02, (byte)0xFE, (byte)0xFF};
 	byte clientAddress = 0x03;
 	private int clientAddressDecoded = 0x01;

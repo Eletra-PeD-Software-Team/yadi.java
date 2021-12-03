@@ -35,7 +35,7 @@ class HdlcConnection {
 	void reset() {
 		sequenceNumberRX = sequenceNumberTX = 0;
 		windowSizeRx = windowSizeTx = 1;
-		maxInformationFieldRx = maxInformationFieldTx = 128;
+		maxInformationFieldRx = maxInformationFieldTx = 0;
 		sss = receivedRrr = receivedSss = 0;
 		receivedControl = 0;
 		isFinalPoll = false;

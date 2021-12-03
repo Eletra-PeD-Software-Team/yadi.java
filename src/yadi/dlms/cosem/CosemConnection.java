@@ -70,6 +70,9 @@ public class CosemConnection {
 		public boolean thisIsLast() {
 			return getBlock(nextBlockNum) == null;
 		}
+		public boolean nextIsNull() {
+			return getBlock(nextBlockNum+1) == null;
+		}
 
 		public boolean nextIsLast() {
 			return getBlock(nextBlockNum+1) == null;

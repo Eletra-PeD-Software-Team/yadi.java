@@ -96,6 +96,13 @@ public class CosemParser {
 		return rawbytes;
 	}
 	
+	public byte[] octetStringNoDlms(int size) {
+
+		byte[] rawbytes = new byte[size];
+		is.read(rawbytes, 0, size);
+		return rawbytes;
+	}
+	
 	public byte[] bcd() {
 		int tag = is.read();
 		if (tag != DlmsType.BCD.tag) {
@@ -135,6 +142,12 @@ public class CosemParser {
 		if (is.read() != DlmsType.BOOLEAN.tag) {
 			throw new IllegalArgumentException();
 		}
+		if (is.read() == 0) {
+			return false;
+		}
+		return true;
+	}
+	public boolean boolNoDlms() {
 		if (is.read() == 0) {
 			return false;
 		}
@@ -195,7 +208,9 @@ public class CosemParser {
 		}
 		return is.read();
 	}
-
+	public int enumerationNoDlms() {
+		return is.read();
+	}
 	public int int8() {
 		if (is.read() != DlmsType.INT8.tag || is.available() < 1) {
 			throw new IllegalArgumentException();
@@ -211,6 +226,10 @@ public class CosemParser {
 		return is.read() & 0xFF;
 	}
 	
+	public int uint8NoDlms() {
+		return is.read() & 0xFF;
+	}
+	
 	public int int16() {
 		if (is.read() != DlmsType.INT16.tag || is.available() < 2) {
 			throw new IllegalArgumentException();
@@ -218,10 +237,19 @@ public class CosemParser {
 		return readI16();
 	}
 	
+	public int int16NoDlms() {
+
+		return readI16();
+	}
+	
 	public int uint16() {
 		if (is.read() != DlmsType.UINT16.tag || is.available() < 2) {
 			throw new IllegalArgumentException();
 		}
+		return readU16();
+	}
+	public int uint16NoDlms() {
+
 		return readU16();
 	}
 	

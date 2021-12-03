@@ -264,8 +264,8 @@ public class HdlcLinkLayer implements LinkLayer {
 			data.write(ByteBuffer.allocate(4).putInt(params.windowSizeRx).array());
 		}
 		if (data.size() > 0) {
-			out.write(0x80);
 			out.write(0x81);
+			out.write(0x80);
 			out.write(data.size());
 			out.write(data.toByteArray());
 		}
