@@ -250,7 +250,7 @@ public class CosemParser {
 	}
 	public int uint16NoDlms() {
 
-		return readU16();
+		return readU16LittleEndian();
 	}
 	
 	public int int32() {
@@ -340,9 +340,15 @@ public class CosemParser {
 	private int readI16() {
 		return ((is.read() << 8) | is.read());
 	}
+	private int readI16LittleEndian() {
+		return (is.read() | (is.read() << 8) );
+	}
 	
 	private int readU16() {
 		return readI16() & 0xFFFF;
+	}
+	private int readU16LittleEndian() {
+		return readI16LittleEndian() & 0xFFFF;
 	}
 	
 	private int readI32() {
