@@ -93,6 +93,9 @@ public final class SerialPhyLayer implements PhyLayer {
 	 * @throws PhyLayerException
 	 */
 	public void open(String serialName) throws PhyLayerException {
+		if (serialName == null)
+			serialName = "";
+
 		serialPort = SerialPort.getCommPort(serialName);
 		try {
 			if (!serialPort.openPort()) {
