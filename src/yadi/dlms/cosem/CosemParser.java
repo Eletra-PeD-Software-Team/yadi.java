@@ -96,6 +96,14 @@ public class CosemParser {
 		return rawbytes;
 	}
 	
+	public byte[] rawString() {
+		int tag = is.read();
+		int size = parseSize();
+		byte[] rawbytes = new byte[size];
+		is.read(rawbytes, 0, size);
+		return rawbytes;
+	}
+	
 	public byte[] bcd() {
 		int tag = is.read();
 		if (tag != DlmsType.BCD.tag) {
