@@ -179,8 +179,15 @@ public class Security {
 
 	static byte[] generateChallanger(CosemParameters params) {
 		byte[] random = new byte[params.challengerSize];
+		//Making it only visible chars.
 		synchronized(randomLocker) {
-			sr.nextBytes(random);
+			for(int i = 0; i <params.challengerSize ; i++ ) {
+				
+				random[i] = (byte)sr.nextInt(127);
+				
+				if(random[i] < 1) i--;
+		  }
+			
 		}
 		return random;
 	}

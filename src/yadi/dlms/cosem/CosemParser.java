@@ -84,6 +84,15 @@ public class CosemParser {
 		is.read(rawbytes, 0, size);
 		return new String(rawbytes);
 	}
+	public byte[] rawString() {
+		if (is.read() != DlmsType.STRING.tag) {
+			throw new IllegalArgumentException();
+		}
+		int size = parseSize();
+		byte[] rawbytes = new byte[size];
+		is.read(rawbytes, 0, size);
+		return rawbytes;
+	}
 
 	public byte[] octetString() {
 		int tag = is.read();

@@ -370,6 +370,10 @@ public class Cosem {
 		try {
 			if (params.securityType != SecurityType.NONE) {
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				
+				System.out.println("Before Encryption");
+				printBytes(payload);
+				
 				byte[] data = Security.authenticatedEncryption(params, payload);
 				stream.reset();
 				stream.write(cmdGlobalCipher);
@@ -381,6 +385,15 @@ public class Cosem {
 		} catch (IOException e) {
 			throw new DlmsException(DlmsExceptionReason.INTERNAL_ERROR);
 		}
+	}
+	
+	public void printBytes(byte[] data) {
+		StringBuilder sb = new StringBuilder();
+		for (byte b : data) {
+			sb.append(String.format("%02X ", b));
+		}
+		sb.append("\r\n");
+		System.out.println(sb.toString());
 	}
 	
 	private byte[] unpackFrame(int cmdNoCipher, int cmdGlobalCipher, byte[] data) throws DlmsException {
