@@ -29,7 +29,7 @@ public class PhyLayerException extends Exception {
 	private static final long serialVersionUID = -6404641898902558458L;
 	private final PhyLayerExceptionReason reason;
 	
-	PhyLayerException(PhyLayerExceptionReason reason) {
+	public PhyLayerException(PhyLayerExceptionReason reason) {
 		this.reason = reason;
 	}
 	
