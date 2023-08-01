@@ -17,13 +17,12 @@
  */
 package yadi.dlms.phylayer;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortInvalidPortException;
-
 import yadi.dlms.phylayer.PhyLayerException.PhyLayerExceptionReason;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public final class SerialPhyLayer implements PhyLayer {
 	private SerialPort serialPort;
@@ -183,5 +182,10 @@ public final class SerialPhyLayer implements PhyLayer {
 	public void addListener(PhyLayerListener listener) {
 		listeners.add(listener);
 	}
-	
+
+	@Override
+	public void removeListener(PhyLayerListener listener) {
+
+	}
+
 }

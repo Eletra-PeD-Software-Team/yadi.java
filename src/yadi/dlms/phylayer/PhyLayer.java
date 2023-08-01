@@ -21,4 +21,6 @@ public interface PhyLayer {
 	void sendData(byte[] data) throws PhyLayerException;
 	byte[] readData(int timeoutMillis, PhyLayerParser parser) throws PhyLayerException;
 	void addListener(PhyLayerListener listener);
+
+	void removeListener(PhyLayerListener listener);
 }

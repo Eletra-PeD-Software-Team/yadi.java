@@ -17,14 +17,14 @@
  */
 package yadi.dlms.phylayer;
 
+import yadi.dlms.phylayer.PhyLayerException.PhyLayerExceptionReason;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
-import yadi.dlms.phylayer.PhyLayerException.PhyLayerExceptionReason;
 
 public class TcpPhyLayer implements PhyLayer {
 	
@@ -117,6 +117,11 @@ public class TcpPhyLayer implements PhyLayer {
 	@Override
 	public void addListener(PhyLayerListener listener) {
 		listeners.add(listener);
+	}
+
+	@Override
+	public void removeListener(PhyLayerListener listener) {
+
 	}
 
 }

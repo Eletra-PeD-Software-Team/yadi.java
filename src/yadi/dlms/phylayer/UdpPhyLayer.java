@@ -1,5 +1,7 @@
 package yadi.dlms.phylayer;
 
+import yadi.dlms.phylayer.PhyLayerException.PhyLayerExceptionReason;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -7,8 +9,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
-
-import yadi.dlms.phylayer.PhyLayerException.PhyLayerExceptionReason;
 
 public class UdpPhyLayer implements PhyLayer {
 	
@@ -98,5 +98,10 @@ public class UdpPhyLayer implements PhyLayer {
 	public void addListener(PhyLayerListener listener) {
 		listeners.add(listener);
 	}
-	
+
+	@Override
+	public void removeListener(PhyLayerListener listener) {
+
+	}
+
 }
