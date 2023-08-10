@@ -53,7 +53,8 @@ public class TcpPhyLayer implements PhyLayer {
 	 */
 	public void close() {
 		try {
-			socket.close();
+			if (socket != null)
+				socket.close();
 		} catch (IOException e) {
 			// silence disconnection
 		}
