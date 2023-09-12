@@ -97,15 +97,29 @@ public class TcpPhyLayer implements PhyLayer {
 					int len = input.read(data);
 					stream.write(data, 0, len);
 					if (parser.isFrameComplete(stream.toByteArray())) {
-						for (PhyLayerListener listener : listeners) {
-							listener.dataReceived(stream.toByteArray());
-						}
+						listeners.forEach(listener -> listener.dataReceived(stream.toByteArray()));
 						return stream.toByteArray();
 					}
 				}
 			}
+			listeners.forEach(listener -> {
+				try {
+					stream.write(hexStringToByteArray(" TEST 123"));
+					listener.dataReceived(stream.toByteArray());
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			});
 			throw new PhyLayerException(PhyLayerExceptionReason.TIMEOUT);
 		} catch (IOException e) {
+			listeners.forEach(listener -> {
+				try {
+					stream.write(hexStringToByteArray(" TEST 123"));
+					listener.dataReceived(stream.toByteArray());
+				} catch (IOException ex) {
+					throw new RuntimeException(ex);
+				}
+			});
 			throw new PhyLayerException(PhyLayerExceptionReason.INTERNAL_ERROR);
 		}
 	}
@@ -123,6 +137,20 @@ public class TcpPhyLayer implements PhyLayer {
 	@Override
 	public void removeListener(PhyLayerListener listener) {
 
+	}
+
+	public static byte[] hexStringToByteArray(String s) {
+		s = s.replaceAll(" ", "");
+		int len = s.length();
+		if ((len & 0x01) != 0) {
+			s = "0" + s;
+			++len;
+		}
+		byte[] data = new byte[len / 2];
+		for (int i = 0; i < len; i += 2) {
+			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
+		}
+		return data;
 	}
 
 }
