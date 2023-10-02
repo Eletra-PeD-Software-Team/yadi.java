@@ -39,7 +39,7 @@ public class Emode {
 			 * Will cancel the current transmission if you try to
 			 * Change the serial port configuration.
 			 */
-			Thread.sleep(180);
+			Thread.sleep(250);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

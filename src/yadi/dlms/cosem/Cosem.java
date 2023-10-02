@@ -164,9 +164,9 @@ public class Cosem {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			stream.write(Constants.xDlmsApdu.NoCiphering.SET_REQUEST);
 			byte[] data = att.getRequestData();
-			if (data.length > (connection.maxPduSize - 20)) {
+			if (data.length > (connection.maxPduSize - 44)) {
 				if (connection.datablock.nextBlockNum == 1) {
-					connection.datablock.setData(data, connection.maxPduSize - 20);
+					connection.datablock.setData(data, connection.maxPduSize - 44);
 					//Set-Request-With-First-Datablock
 					stream.write(2);
 					stream.write(params.priority | params.serviceClass | Constants.INVOKE_ID);
@@ -186,8 +186,8 @@ public class Cosem {
 					//Set-Request-With-Datablock
 					stream.write(3);
 					stream.write(params.priority | params.serviceClass | Constants.INVOKE_ID);
-					if (connection.datablock.thisIsLast()) {
-						stream.write(1);
+					if (connection.datablock.nextIsNull()) {
+						stream.write(0xFF);
 					} else {
 						stream.write(0);
 					}
@@ -370,6 +370,10 @@ public class Cosem {
 		try {
 			if (params.securityType != SecurityType.NONE) {
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				
+				System.out.println("Before Encryption");
+				printBytes(payload);
+				
 				byte[] data = Security.authenticatedEncryption(params, payload);
 				stream.reset();
 				stream.write(cmdGlobalCipher);
@@ -381,6 +385,15 @@ public class Cosem {
 		} catch (IOException e) {
 			throw new DlmsException(DlmsExceptionReason.INTERNAL_ERROR);
 		}
+	}
+	
+	public void printBytes(byte[] data) {
+		StringBuilder sb = new StringBuilder();
+		for (byte b : data) {
+			sb.append(String.format("%02X ", b));
+		}
+		sb.append("\r\n");
+		System.out.println(sb.toString());
 	}
 	
 	private byte[] unpackFrame(int cmdNoCipher, int cmdGlobalCipher, byte[] data) throws DlmsException {

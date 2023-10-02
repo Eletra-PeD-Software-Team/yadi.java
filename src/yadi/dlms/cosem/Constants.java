@@ -140,24 +140,25 @@ class Constants {
 	}
 	
 	static class ConformanceBlock {
+		//The conformance block has a mistake here, it was fixed day 23/03/2022. reason, the order WAS inverted from MSB to LSB.
 		static final int TAG = 95; //TODO where?
-		static final int READ = 1 << 3;
-		static final int WRITE = 1 << 4;
-		static final int UNCONFIRMED_WRITE = 1 << 5;
-		static final int ATTRIBUTE_0_SUPPORTED_WITH_SET = 1 << 8;
-		static final int PRIORITY_MGMT_SUPPORTED = 1 << 9;
-		static final int ATTRIBUTE_0_SUPPORTED_WITH_GET = 1 << 10;
-		static final int BLOCK_TRANSFER_WITH_GET_OR_READ = 1 << 11;
-		static final int BLOCK_TRANSFER_WITH_SET_OR_WRITE = 1 << 12;
-		static final int BLOCK_TRANSFER_WITH_ACTION = 1 << 13;
-		static final int MULTIPLE_REFERENCES = 1 << 14;
-		static final int INFORMATION_REPORT = 1 << 15;
-		static final int PARAMETERIZED_ACCESS = 1 << 18;
-		static final int GET = 1 << 19;
-		static final int SET = 1 << 20;
-		static final int SELECTIVE_ACCESS = 1 << 21;
-		static final int EVENT_NOTIFICATION = 1 << 22;
-		static final int ACTION = 1 << 23;
+		static final int READ = 1 << (23-3);
+		static final int WRITE = 1 << (23-4);
+		static final int UNCONFIRMED_WRITE = 1 << (23-5);
+		static final int ATTRIBUTE_0_SUPPORTED_WITH_SET = 1 << (23-8);
+		static final int PRIORITY_MGMT_SUPPORTED = 1 << (23-9);
+		static final int ATTRIBUTE_0_SUPPORTED_WITH_GET = 1 << (23-10);
+		static final int BLOCK_TRANSFER_WITH_GET_OR_READ = 1 << (23-11);
+		static final int BLOCK_TRANSFER_WITH_SET_OR_WRITE = 1 << (23-12);
+		static final int BLOCK_TRANSFER_WITH_ACTION = 1 << (23-13);
+		static final int MULTIPLE_REFERENCES = 1 << (23-14);
+		static final int INFORMATION_REPORT = 1 << (23-15);
+		static final int PARAMETERIZED_ACCESS = 1 << (23-18);
+		static final int GET = 1 << (23-19);
+		static final int SET = 1 << (23-20);
+		static final int SELECTIVE_ACCESS = 1 << (23 - 21);
+		static final int EVENT_NOTIFICATION = 1 << (23 - 22);
+		static final int ACTION = 1 << (23- 23);
 	}
 	
 	static class ApplicationContextName {

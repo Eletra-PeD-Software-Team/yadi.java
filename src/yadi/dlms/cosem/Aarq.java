@@ -147,6 +147,7 @@ class Aarq {
 		conformanceBlock |= Constants.ConformanceBlock.BLOCK_TRANSFER_WITH_GET_OR_READ;
 		conformanceBlock |= Constants.ConformanceBlock.BLOCK_TRANSFER_WITH_SET_OR_WRITE;
 		conformanceBlock |= Constants.ConformanceBlock.SELECTIVE_ACCESS;
+		
 		return ByteBuffer.allocate(4).putInt(conformanceBlock).array();
 	}
 	
