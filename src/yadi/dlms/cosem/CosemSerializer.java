@@ -21,7 +21,7 @@ public class CosemSerializer {
 	}
 	
 	public CosemSerializer serializeSize(int size) {
-	    if (size <= 0x80) {
+	    if (size < 0x80) {
 	        os.write(size);
 	    } else if (size <= 0xFF) {
 	    	os.write(0x81);
@@ -30,7 +30,7 @@ public class CosemSerializer {
 	    	os.write(0x82);
 	    	os.write(size >>> 8);
 	    	os.write(size);
-	    } else if (size <= 0xFFFFFF) {
+	    } else if (size < 0xFFFFFF) {
 	    	os.write(0x83);
 	    	os.write(size >>> 16);
 	    	os.write(size >>> 8);
