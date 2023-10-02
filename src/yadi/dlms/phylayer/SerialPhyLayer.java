@@ -17,19 +17,26 @@
  */
 package yadi.dlms.phylayer;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortInvalidPortException;
-
 import yadi.dlms.phylayer.PhyLayerException.PhyLayerExceptionReason;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public final class SerialPhyLayer implements PhyLayer {
 	private SerialPort serialPort;
 	private final ArrayList<PhyLayerListener> listeners = new ArrayList<PhyLayerListener>();
 	private final ByteArrayOutputStream stream = new ByteArrayOutputStream();
-	
+	private static SerialPhyLayer serialPhyLayer;
+
+	public static SerialPhyLayer getInstance() {
+		if (serialPhyLayer == null) {
+			serialPhyLayer = new SerialPhyLayer();
+		}
+		return serialPhyLayer;
+	}
+
 	public enum DataBits {
 		_5(5),
 		_6(6),
@@ -78,12 +85,20 @@ public final class SerialPhyLayer implements PhyLayer {
 	
 	/**
 	 * Sets the RTS pin of the serial port
-	 * @param enabled true if the RTS pin should be set, false if it should be cleared
 	 * @throws PhyLayerException
 	 */
 	public void setRTS() throws PhyLayerException {
 		if (!serialPort.setRTS()) {
 			throw new PhyLayerException(PhyLayerExceptionReason.INTERNAL_ERROR);
+		}
+	}
+
+	public void selectPort(String comPort) {
+		for (SerialPort port : SerialPort.getCommPorts()) {
+			if (port.getSystemPortName().equals(comPort)) {
+				serialPort = port;
+				break; // Found the desired port, exit the loop
+			}
 		}
 	}
 	
