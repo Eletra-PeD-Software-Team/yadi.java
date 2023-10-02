@@ -201,5 +201,10 @@ public final class SerialPhyLayer implements PhyLayer {
 	public void addListener(PhyLayerListener listener) {
 		listeners.add(listener);
 	}
-	
+
+	@Override
+	public void removeListener(PhyLayerListener listener) {
+
+	}
+
 }
