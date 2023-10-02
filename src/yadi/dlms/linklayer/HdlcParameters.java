@@ -22,8 +22,9 @@ public class HdlcParameters {
 	final int windowSizeTx = 1; //windowSizeTx != 1 not supported
 	final int windowSizeRx = 1; //windowSizeTx != 1 not supported
 	int timeoutMillis = 1500;
-	int maxInformationFieldLengthTx = 522;
-	int maxInformationFieldLengthRx = 522;
+	int maxInformationFieldLengthTx = 512;
+	int maxInformationFieldLengthRx = 512;
+	//THERE IS A BUG INTO THE FRAME FORMATING AND THE MAXINFORMATIONFIELDLENTGHTX... It must be fixed.
 	byte[] serverAddress = new byte[]{0x00, 0x02, (byte)0xFE, (byte)0xFF};
 	byte clientAddress = 0x03;
 	private int clientAddressDecoded = 0x01;
