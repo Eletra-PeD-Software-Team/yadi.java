@@ -28,10 +28,12 @@ import java.util.ArrayList;
 
 public class TcpPhyLayer implements PhyLayer {
 	
-	private final ArrayList<PhyLayerListener> listeners = new ArrayList<PhyLayerListener>();
+	private final ArrayList<PhyLayerListener> listeners = new ArrayList<>();
 	private final ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	private Socket socket;
-		
+	private String ip;
+	private int port;
+
 	/**
 	 * Opens the TCP socket
 	 * @param ip String representing the IP to connect to
@@ -40,6 +42,8 @@ public class TcpPhyLayer implements PhyLayer {
 	 */
 	public void open(String ip, int port) throws PhyLayerException {
 		try {
+			this.ip = ip;
+			this.port = port;
 			socket = new Socket(ip, port);
 		} catch (UnknownHostException e) {
 			throw new PhyLayerException(PhyLayerExceptionReason.INVALID_CHANNEL);
@@ -104,7 +108,7 @@ public class TcpPhyLayer implements PhyLayer {
 			}
 			listeners.forEach(listener -> {
 				try {
-					stream.write(hexStringToByteArray(" TEST 123"));
+					stream.write(hexStringToByteArray("AABBCCDD"));
 					listener.dataReceived(stream.toByteArray());
 				} catch (IOException e) {
 					throw new RuntimeException(e);
@@ -153,4 +157,23 @@ public class TcpPhyLayer implements PhyLayer {
 		return data;
 	}
 
+	public boolean isConnected() {
+		return socket.isConnected();
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
 }
