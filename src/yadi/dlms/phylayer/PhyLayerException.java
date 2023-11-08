@@ -18,6 +18,8 @@
 package yadi.dlms.phylayer;
 
 public class PhyLayerException extends Exception {
+
+	public StackTraceElement[] stackTrace2;
 	
 	public enum PhyLayerExceptionReason {
 		INTERNAL_ERROR,

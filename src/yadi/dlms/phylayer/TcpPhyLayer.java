@@ -77,7 +77,9 @@ public class TcpPhyLayer implements PhyLayer {
 				listener.dataSent(data);
 			}
 		} catch (IOException e) {
-			throw new PhyLayerException(PhyLayerExceptionReason.INTERNAL_ERROR);
+			PhyLayerException phyLayerException = new PhyLayerException(PhyLayerExceptionReason.INTERNAL_ERROR);
+			phyLayerException.stackTrace2 = e.getStackTrace();
+			throw phyLayerException;
 		}
 	}
 	
@@ -100,30 +102,14 @@ public class TcpPhyLayer implements PhyLayer {
 				if (input.available() > 0) {
 					int len = input.read(data);
 					stream.write(data, 0, len);
+					listeners.forEach(listener -> listener.dataReceived(stream.toByteArray()));
 					if (parser.isFrameComplete(stream.toByteArray())) {
-						listeners.forEach(listener -> listener.dataReceived(stream.toByteArray()));
 						return stream.toByteArray();
 					}
 				}
 			}
-			listeners.forEach(listener -> {
-				try {
-					stream.write(hexStringToByteArray("AABBCCDD"));
-					listener.dataReceived(stream.toByteArray());
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-			});
 			throw new PhyLayerException(PhyLayerExceptionReason.TIMEOUT);
 		} catch (IOException e) {
-			listeners.forEach(listener -> {
-				try {
-					stream.write(hexStringToByteArray(" TEST 123"));
-					listener.dataReceived(stream.toByteArray());
-				} catch (IOException ex) {
-					throw new RuntimeException(ex);
-				}
-			});
 			throw new PhyLayerException(PhyLayerExceptionReason.INTERNAL_ERROR);
 		}
 	}
