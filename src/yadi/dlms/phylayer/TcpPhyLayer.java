@@ -102,8 +102,8 @@ public class TcpPhyLayer implements PhyLayer {
 				if (input.available() > 0) {
 					int len = input.read(data);
 					stream.write(data, 0, len);
-					listeners.forEach(listener -> listener.dataReceived(stream.toByteArray()));
 					if (parser.isFrameComplete(stream.toByteArray())) {
+						listeners.forEach(listener -> listener.dataReceived(stream.toByteArray()));
 						return stream.toByteArray();
 					}
 				}
